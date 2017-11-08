@@ -16,8 +16,12 @@ $tomorrow = strtotime('tomorrow midnight');
 // временная метка для настоящего времени
 $now = strtotime('now');
 
+$diff = $tomorrow - $now;
+$hours = floor($diff / 3600);
+$minutes = ceil($diff / 60) - ($hours * 60);
+
 // далее нужно вычислить оставшееся время до начала следующих суток и записать его в переменную $lot_time_remaining
-$lot_time_remaining = gmdate("H:i:s", $tomorrow - $now);
+$lot_time_remaining = $hours.':'.$minutes;
 ?>
 <!DOCTYPE html>
 <html lang="ru">
