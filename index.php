@@ -23,6 +23,47 @@ $minutes = str_pad(strval(floor($diff / 60) - ($hours * 60)), 2, "0", STR_PAD_LE
 // далее нужно вычислить оставшееся время до начала следующих суток и записать его в переменную $lot_time_remaining
 $lot_time_remaining = $hours.':'.$minutes;
 // $lot_time_remaining = gmdate("H:i:s", $tomorrow - $now);
+
+
+$categories = ['Доски и лыжи', 'Крепления', 'Ботинки', 'Одежда', 'Инструменты', 'Разное'];
+$announcement = [
+    [
+        'name' => '2014 Rossignol District Snowboard',
+        'category' => 'Доски и лыжи',
+        'price' => '10999',
+        'url_img' => 'img/lot-1.jpg'
+    ],
+    [
+        'name' => 'DC Ply Mens 2016/2017 Snowboard',
+        'category' => 'Доски и лыжи',
+        'price' => '159999',
+        'url_img' => 'img/lot-2.jpg'
+    ],
+    [
+        'name' => 'Крепления Union Contact Pro 2015 года размер L/XL',
+        'category' => 'Крепления',
+        'price' => '8000',
+        'url_img' => 'img/lot-3.jpg'
+    ],
+    [
+        'name' => 'Ботинки для сноуборда DC Mutiny Charocal',
+        'category' => 'Ботинки',
+        'price' => '10999',
+        'url_img' => 'img/lot-4.jpg'
+    ],
+    [
+        'name' => 'Куртка для сноуборда DC Mutiny Charocal',
+        'category' => 'Одежда',
+        'price' => '7500',
+        'url_img' => 'img/lot-5.jpg'
+    ],
+    [
+        'name' => 'Маска Oakley Canopy',
+        'category' => 'Разное',
+        'price' => '5400',
+        'url_img' => 'img/lot-6.jpg'
+    ] 
+]
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -74,10 +115,12 @@ $lot_time_remaining = $hours.':'.$minutes;
         <h2 class="promo__title">Нужен стафф для катки?</h2>
         <p class="promo__text">На нашем интернет-аукционе ты найдёшь самое эксклюзивное сноубордическое и горнолыжное снаряжение.</p>
         <ul class="promo__list">
+            <? foreach ($categories as $key => $name_category): ?>
             <li class="promo__item promo__item--boards">
-                <a class="promo__link" href="all-lots.html">Доски и лыжи</a>
+                <a class="promo__link" href="all-lots.html"><?=$name_category; ?></a>
             </li>
-            <li class="promo__item promo__item--attachment">
+            <? endforeach; ?>
+            <!-- <li class="promo__item promo__item--attachment">
                 <a class="promo__link" href="all-lots.html">Крепления</a>
             </li>
             <li class="promo__item promo__item--boots">
@@ -91,7 +134,7 @@ $lot_time_remaining = $hours.':'.$minutes;
             </li>
             <li class="promo__item promo__item--other">
                 <a class="promo__link" href="all-lots.html">Разное</a>
-            </li>
+            </li> -->
         </ul>
     </section>
     <section class="lots">
