@@ -26,7 +26,6 @@ $minutes = str_pad(strval(floor($diff / 60) - ($hours * 60)), 2, "0", STR_PAD_LE
 $lot_time_remaining = $hours.':'.$minutes;
 // $lot_time_remaining = gmdate("H:i:s", $tomorrow - $now);
 
-
 $categories = ['Доски и лыжи', 'Крепления', 'Ботинки', 'Одежда', 'Инструменты', 'Разное'];
 $announcements = [
     [
