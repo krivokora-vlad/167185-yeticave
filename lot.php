@@ -1,5 +1,7 @@
 <?php
 
+require_once('data.php');
+
 // ставки пользователей, которыми надо заполнить таблицу
 $bets = [
     ['name' => 'Иван', 'price' => 11500, 'ts' => strtotime('-' . rand(1, 50) .' minute')],
@@ -19,6 +21,13 @@ function time_of_betting($ts) {
         return gmdate("i минут назад", $diff);
     }
 }
+
+$lot_id = $_GET['id'];
+$page_found = isset($announcements[$lot_id]);
+if (!$page_found) {
+    http_response_code(404);
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -79,13 +88,14 @@ function time_of_betting($ts) {
         </ul>
     </nav>
     <section class="lot-item container">
-        <h2>DC Ply Mens 2016/2017 Snowboard</h2>
+    <?php if (isset($announcements[$lot_id])): ?>
+        <h2><?=$announcements[$lot_id]['name']; ?></h2>
         <div class="lot-item__content">
             <div class="lot-item__left">
                 <div class="lot-item__image">
-                    <img src="img/lot-image.jpg" width="730" height="548" alt="Сноуборд">
+                    <img src="<?=$announcements[$lot_id]['url_img']; ?>" width="730" height="548" alt="Сноуборд">
                 </div>
-                <p class="lot-item__category">Категория: <span>Доски и лыжи</span></p>
+                <p class="lot-item__category">Категория: <span><?=$announcements[$lot_id]['category']; ?></span></p>
                 <p class="lot-item__description">Легкий маневренный сноуборд, готовый дать жару в любом парке, растопив
                     снег
                     мощным щелчкоми четкими дугами. Стекловолокно Bi-Ax, уложенное в двух направлениях, наделяет этот
@@ -105,7 +115,7 @@ function time_of_betting($ts) {
                     <div class="lot-item__cost-state">
                         <div class="lot-item__rate">
                             <span class="lot-item__amount">Текущая цена</span>
-                            <span class="lot-item__cost">11 500</span>
+                            <span class="lot-item__cost"><?=$announcements[$lot_id]['price']; ?></span>
                         </div>
                         <div class="lot-item__min-cost">
                             Мин. ставка <span>12 000 р</span>
@@ -134,6 +144,9 @@ function time_of_betting($ts) {
                 </div>
             </div>
         </div>
+    <?php else: ?>
+        <h1>Лот с этим ID не найден</h1>
+    <?php endif; ?>
     </section>
 </main>
 
