@@ -1,4 +1,8 @@
 <?
+
+$user_name = 'Константин';
+$user_avatar = 'img/user.jpg';
+
 $announcements = [
     [
         'name' => '2014 Rossignol District Snowboard',
