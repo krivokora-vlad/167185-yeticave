@@ -1,6 +1,9 @@
 <?php
-require_once('functions.php');
+
 require_once('data.php');
+
+require_once('functions.php');
+
 
 
 
@@ -26,9 +29,6 @@ $minutes = str_pad(strval(floor($diff / 60) - ($hours * 60)), 2, "0", STR_PAD_LE
 $lot_time_remaining = $hours.':'.$minutes;
 // $lot_time_remaining = gmdate("H:i:s", $tomorrow - $now);
 
-$categories = ['Доски и лыжи', 'Крепления', 'Ботинки', 'Одежда', 'Инструменты', 'Разное'];
-
-
 $page_data = [
     'categories' => $categories,
     'announcements' => $announcements,
@@ -38,10 +38,9 @@ $page_content = include_template('index', $page_data);
 $layout_content = include_template('layout', [
     'content' => $page_content,
     'title' => 'Главная',
-    'is_auth' => $is_auth,
+    'is_auth' => is_auth(),
     'user_name' => $user_name,
     'user_avatar' => $user_avatar
 ]);
 
 print($layout_content);
-?>

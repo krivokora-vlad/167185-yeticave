@@ -3,6 +3,8 @@
 $user_name = 'Константин';
 $user_avatar = 'img/user.jpg';
 
+$categories = ['Доски и лыжи', 'Крепления', 'Ботинки', 'Одежда', 'Инструменты', 'Разное'];
+
 $announcements = [
     [
         'name' => '2014 Rossignol District Snowboard',
@@ -41,4 +43,11 @@ $announcements = [
         'url_img' => 'img/lot-6.jpg'
     ] 
 ];
-?>
+
+// ставки пользователей, которыми надо заполнить таблицу
+$bets = [
+    ['name' => 'Иван', 'price' => 11500, 'ts' => strtotime('-' . rand(1, 50) .' minute')],
+    ['name' => 'Константин', 'price' => 11000, 'ts' => strtotime('-' . rand(1, 18) .' hour')],
+    ['name' => 'Евгений', 'price' => 10500, 'ts' => strtotime('-' . rand(25, 50) .' hour')],
+    ['name' => 'Семён', 'price' => 10000, 'ts' => strtotime('last week')]
+];

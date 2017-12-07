@@ -22,5 +22,6 @@
     </nav>
 
     <section class="lot-item container">
-      <h1><?=$data['message'];?></h1>
+      <h1><?=$data['title'];?></h1>
+      <p><?=$data['message'];?></p>
     </section>
