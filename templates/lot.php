@@ -1,34 +1,21 @@
     <nav class="nav">
         <ul class="nav__list container">
+          <? foreach ($data['categories'] as $key => $value): ?>
             <li class="nav__item">
-                <a href="">Доски и лыжи</a>
+              <a href="#"><?=$value;?></a>
             </li>
-            <li class="nav__item">
-                <a href="">Крепления</a>
-            </li>
-            <li class="nav__item">
-                <a href="">Ботинки</a>
-            </li>
-            <li class="nav__item">
-                <a href="">Одежда</a>
-            </li>
-            <li class="nav__item">
-                <a href="">Инструменты</a>
-            </li>
-            <li class="nav__item">
-                <a href="">Разное</a>
-            </li>
+          <? endforeach; ?> 
         </ul>
     </nav>
     <section class="lot-item container">
-    <?php if (isset($data['announcements'][$data['lot_id']])): ?>
-        <h2><?=$data['announcements'][$data['lot_id']]['name']; ?></h2>
+    <?php if (isset($data['lot'])): ?>
+        <h2><?=$data['lot']['name']; ?></h2>
         <div class="lot-item__content">
             <div class="lot-item__left">
                 <div class="lot-item__image">
-                    <img src="<?=$data['announcements'][$data['lot_id']]['url_img']; ?>" width="730" height="548" alt="Сноуборд">
+                    <img src="<?=$data['lot']['url_img']; ?>" width="730" height="548" alt="Сноуборд">
                 </div>
-                <p class="lot-item__category">Категория: <span><?=$data['announcements'][$data['lot_id']]['category']; ?></span></p>
+                <p class="lot-item__category">Категория: <span><?=$data['lot']['category']; ?></span></p>
                 <p class="lot-item__description">Легкий маневренный сноуборд, готовый дать жару в любом парке, растопив
                     снег
                     мощным щелчкоми четкими дугами. Стекловолокно Bi-Ax, уложенное в двух направлениях, наделяет этот
@@ -48,7 +35,7 @@
                     <div class="lot-item__cost-state">
                         <div class="lot-item__rate">
                             <span class="lot-item__amount">Текущая цена</span>
-                            <span class="lot-item__cost"><?=$data['announcements'][$data['lot_id']]['price']; ?></span>
+                            <span class="lot-item__cost"><?=$data['lot']['price']; ?></span>
                         </div>
                         <div class="lot-item__min-cost">
                             Мин. ставка <span>12 000 р</span>

@@ -38,7 +38,7 @@ $page_content = include_template('index', $page_data);
 $layout_content = include_template('layout', [
     'content' => $page_content,
     'title' => 'Главная',
-    'is_auth' => is_auth(),
+    'is_auth' => $is_auth,
     'user_name' => $user_name,
     'user_avatar' => $user_avatar
 ]);
