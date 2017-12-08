@@ -37,11 +37,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     if ($key == 'lot-rate' && ($value < 0 || !filter_var($value, FILTER_VALIDATE_FLOAT))) {
-      $errors['Начальная цена'] = 'Должно быть числом больше нуля';
+      $errors[$dict[$key]] = 'Должно быть числом больше нуля';
     }
 
     if ($key == 'lot-step' && ($value < 0 || !filter_var($value, FILTER_VALIDATE_INT))) {
-      $errors['Шаг ставки'] = 'Должно быть целое число больше нуля';
+      $errors[$dict[$key]] = 'Должно быть целое число больше нуля';
     }
 
     if ($key == 'lot-date') {
@@ -50,17 +50,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       $current_date = time();
 
       if ( $lot_date < $current_date ) {
-        $errors['Дата окончания торгов'] = 'Указанная дата должна быть больше текущей даты хотя бы на один день.';
+        $errors[$dict[$key]] = 'Указанная дата должна быть больше текущей даты хотя бы на один день.';
       }
     }
   }
 
-  if (isset($_FILES['photo2']['name']) && $_FILES['photo2']['name'] != '') {
+  if (isset($_FILES['photo2']['name'])) {
 		$tmp_name = $_FILES['photo2']['tmp_name'];
 		$path = $_FILES['photo2']['name'];
 
-		$finfo = finfo_open(FILEINFO_MIME_TYPE);
-		$file_type = finfo_file($finfo, $tmp_name);
+    $finfo = finfo_open(FILEINFO_MIME_TYPE);
+    $file_type = ( $_FILES['photo2']['error'] == 0 ) ? finfo_file($finfo, $tmp_name) : '';
+		
 		if ($file_type !== "image/png" && $file_type !== "image/jpeg") {
 			$errors['Файл'] = 'Загрузите картинку в формате PNG или JPG';
 		} else {

@@ -28,13 +28,10 @@
       <div class="form__item <?=isset($data['errors']['Категория']) ? 'form__item--invalid' : '';?>">
         <label for="category">Категория</label>
         <select id="category" name="category" required>
-          <option <?= ($category == 'Выберите категорию') ? 'selected' : ''; ?>>Выберите категорию</option>
-          <option <?= ($category == 'Доски и лыжи') ? 'selected' : ''; ?>>Доски и лыжи</option>
-          <option <?= ($category == 'Крепления') ? 'selected' : ''; ?>>Крепления</option>
-          <option <?= ($category == 'Ботинки') ? 'selected' : ''; ?>>Ботинки</option>
-          <option <?= ($category == 'Одежда') ? 'selected' : ''; ?>>Одежда</option>
-          <option <?= ($category == 'Инструменты') ? 'selected' : ''; ?>>Инструменты</option>
-          <option <?= ($category == 'Разное') ? 'selected' : ''; ?>>Разное</option>
+          <option value="">Выберите категорию</option>
+          <? foreach ($data['categories'] as $key => $value): ?>
+            <option <?= ($category == $value) ? 'selected' : ''; ?> value="<?=$value;?>"><?=$value;?></option>
+          <? endforeach; ?> 
         </select>
         <?=isset($data['errors']['Категория']) ? '<span class="form__error">'.$data['errors']['Категория'].'</span>' : ''; ?>
       </div>
