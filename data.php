@@ -1,7 +1,7 @@
 <?php
 
-$is_auth = (bool) rand(0, 1);
-$user_name = 'Константин';
+$is_auth = (isset($_SESSION['user'])) ? true : false;
+$user_name = (isset($_SESSION['user']['name'])) ? $_SESSION['user']['name'] : '';
 $user_avatar = 'img/user.jpg';
 
 $categories = ['Доски и лыжи', 'Крепления', 'Ботинки', 'Одежда', 'Инструменты', 'Разное'];

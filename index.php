@@ -1,13 +1,10 @@
 <?php
 
-require_once('data.php');
+session_start();
 
+require_once('userdata.php');
 require_once('functions.php');
-
-
-
-
-
+require_once('data.php');
 
 // устанавливаем часовой пояс в Московское время
 date_default_timezone_set('Europe/Moscow');

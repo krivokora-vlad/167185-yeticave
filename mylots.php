@@ -1,7 +1,10 @@
 <?php
-require_once('data.php');
-require_once('functions.php');
 
+session_start();
+
+require_once('userdata.php');
+require_once('functions.php');
+require_once('data.php');
 
 $my_lots = [];
 
@@ -18,7 +21,6 @@ foreach($cookie_value as $key => $value) {
   $lot['lot_id'] = $key;
   $my_lots[] = $lot;
 }
-
 
 $page_content = include_template('mylots', [
   'categories' => $categories,
