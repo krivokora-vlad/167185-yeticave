@@ -22,3 +22,4 @@ function include_template($template_name, $data) {
        return '';
     }
 }
+?>

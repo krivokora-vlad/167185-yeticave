@@ -22,3 +22,5 @@ $layout_content = include_template('layout', [
   'user_avatar' => $user_avatar
 ]);
 print($layout_content);
+
+?>

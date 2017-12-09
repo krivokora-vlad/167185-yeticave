@@ -34,3 +34,5 @@ $layout_content = include_template('layout', [
 ]);
 
 print($layout_content);
+
+?>
