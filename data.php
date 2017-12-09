@@ -1,7 +1,6 @@
 <?php
 
-$is_auth = (isset($_SESSION['user'])) ? true : false;
-$user_name = (isset($_SESSION['user']['name'])) ? $_SESSION['user']['name'] : '';
+$user = (isset($_SESSION['user'])) ? $_SESSION['user'] : false;
 $user_avatar = 'img/user.jpg';
 
 $categories = ['Доски и лыжи', 'Крепления', 'Ботинки', 'Одежда', 'Инструменты', 'Разное'];

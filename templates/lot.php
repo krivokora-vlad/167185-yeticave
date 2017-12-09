@@ -32,7 +32,7 @@
                 равнодушным.</p>
         </div>
         <div class="lot-item__right">
-            <? if($data['is_auth']): ;?>
+            <? if($data['user']): ;?>
             <div class="lot-item__state">
                 <div class="lot-item__timer timer">
                     10:54:12
@@ -74,6 +74,6 @@
         </div>
     </div>
     <?php else: ?>
-    <h1>Лот с этим ID не найден</h1>
+        <h1>Лот с этим ID не найден</h1>
     <?php endif; ?>
 </section>

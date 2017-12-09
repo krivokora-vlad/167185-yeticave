@@ -2,13 +2,12 @@
 
 session_start();
 
-require_once('userdata.php');
 require_once('functions.php');
 require_once('data.php');
 
 $errors = [];
 
-if ($is_auth) {
+if ($user) {
 
   if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     
@@ -94,8 +93,9 @@ if ($is_auth) {
     
         $page_content = include_template('lot', [
           'categories' => $categories,
-          'lot' => $new_lot,
-          'bets' => $bets
+          'lot'   => $new_lot,
+          'bets'  => $bets,
+          'user'  => $user,
         ]);
       } 
     
@@ -118,9 +118,8 @@ if ($is_auth) {
 $layout_content = include_template('layout', [
 	'content'     => $page_content,
   'title'       => 'Добавление лота',
-  'is_auth'     => $is_auth,
-  'user_name'   => $user_name,
-  'user_avatar' => $user_avatar
+  'user'        => $user,
+  'user_avatar' => $user_avatar,
 ]);
 
 print($layout_content);

@@ -2,7 +2,6 @@
 
 session_start();
 
-require_once('userdata.php');
 require_once('functions.php');
 require_once('data.php');
 
@@ -20,8 +19,7 @@ $page_content = include_template('error', $page_data);
 $layout_content = include_template('layout', [
   'content' => $page_content,
   'title' => $title,
-  'is_auth' => $is_auth,
-  'user_name' => $user_name,
+  'user' => $user,
   'user_avatar' => $user_avatar
 ]);
 print($layout_content);
