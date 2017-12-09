@@ -1,13 +1,9 @@
 <?php
 
-require_once('data.php');
+session_start();
 
 require_once('functions.php');
-
-
-
-
-
+require_once('data.php');
 
 // устанавливаем часовой пояс в Московское время
 date_default_timezone_set('Europe/Moscow');
@@ -38,8 +34,7 @@ $page_content = include_template('index', $page_data);
 $layout_content = include_template('layout', [
     'content' => $page_content,
     'title' => 'Главная',
-    'is_auth' => $is_auth,
-    'user_name' => $user_name,
+    'user' => $user,
     'user_avatar' => $user_avatar
 ]);
 

@@ -1,4 +1,4 @@
-<?
+<?php
     $cost = $_POST['cost'] ?? '';
 ?>
 
@@ -32,6 +32,7 @@
                 равнодушным.</p>
         </div>
         <div class="lot-item__right">
+            <? if($data['user']): ;?>
             <div class="lot-item__state">
                 <div class="lot-item__timer timer">
                     10:54:12
@@ -56,6 +57,7 @@
                 <?=(isset($data['errors']['cost'])) ? '<p class="form__error" style="display: block;">'.$data['errors']['cost'].'</p>' : ''; ?>
                 <? endif; ?>
             </div>
+            <? endif; ?>
             <div class="history">
                 <h3>История ставок (<span>4</span>)</h3>
                 <!-- заполните эту таблицу данными из массива $bets-->
@@ -72,6 +74,6 @@
         </div>
     </div>
     <?php else: ?>
-    <h1>Лот с этим ID не найден</h1>
+        <h1>Лот с этим ID не найден</h1>
     <?php endif; ?>
 </section>

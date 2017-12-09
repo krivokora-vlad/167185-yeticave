@@ -1,7 +1,9 @@
 <?php
 
-require_once('data.php');
+session_start();
+
 require_once('functions.php');
+require_once('data.php');
 
 $lot_id = (isset($_GET['id'])) ? $_GET['id'] : -1;
 
@@ -57,6 +59,7 @@ if (!$page_found) {
         'lot_id' => ($lot_id >= 0) ? $lot_id : '',
         'is_bet' => $is_bet,
         'errors' => $errors,
+        'user' => $user,
     ];
     $page_title = $announcements[$lot_id]['name'];
     $page_content = include_template('lot', $page_data);
@@ -65,8 +68,7 @@ if (!$page_found) {
 $layout_content = include_template('layout', [
     'content' => $page_content,
     'title' => $page_title,
-    'is_auth' => $is_auth,
-    'user_name' => $user_name,
+    'user' => $user,
     'user_avatar' => $user_avatar
 ]);
 
