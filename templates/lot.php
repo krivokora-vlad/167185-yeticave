@@ -1,3 +1,7 @@
+<?
+    $cost = $_POST['cost'] ?? '';
+?>
+
 <nav class="nav">
     <ul class="nav__list container">
     <? foreach ($data['categories'] as $key => $value): ?>
@@ -45,10 +49,11 @@
                 <form class="lot-item__form" action="lot.php?id=<?=$data['lot_id'];?>" method="post">
                     <p class="lot-item__form-item">
                         <label for="cost">Ваша ставка</label>
-                        <input id="cost" type="number" name="cost" placeholder="12 000">
+                        <input id="cost" type="number" name="cost" placeholder="<?=$data['lot']['price']; ?>" value="<?=$cost;?>">
                     </p>
                     <button type="submit" class="button">Сделать ставку</button>
                 </form>
+                <?=(isset($data['errors']['cost'])) ? '<p class="form__error" style="display: block;">'.$data['errors']['cost'].'</p>' : ''; ?>
                 <? endif; ?>
             </div>
             <div class="history">
