@@ -19,9 +19,7 @@ CREATE TABLE `user` (
 	`avatar` VARCHAR(128) NOT NULL,
 	`contacts` VARCHAR(512) NOT NULL,
 	PRIMARY KEY (`id`),
-	UNIQUE INDEX `email` (`email`),
-  CONSTRAINT `FK_user_bets` FOREIGN KEY (`id`) REFERENCES `bet` (`user_id`),
-	CONSTRAINT `FK_user_lots` FOREIGN KEY (`id`) REFERENCES `lot` (`user_id`)
+	UNIQUE INDEX `email` (`email`)
 );
 
 CREATE TABLE `lot` (
