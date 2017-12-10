@@ -1,7 +1,12 @@
 <?
 
-require_once 'functions.php';
-require_once 'data.php';
+session_start();
+
+require_once('userdata.php');
+require_once('functions.php');
+require_once('data.php');
+require_once('mysql_helper.php');
+
 
 $db_connect = @mysqli_connect("localhost", "root", "", "yeticave");
 
