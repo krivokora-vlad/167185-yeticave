@@ -15,7 +15,7 @@ CREATE TABLE `user` (
 	`name` VARCHAR(50) NOT NULL,
 	`password` VARCHAR(72) NOT NULL,
 	`avatar` VARCHAR(128) NOT NULL,
-	`contacts` VARCHAR(512) NOT NULL,
+	`contacts` TEXT NOT NULL,
 	PRIMARY KEY (`id`),
 	UNIQUE INDEX `email` (`email`)
 );
