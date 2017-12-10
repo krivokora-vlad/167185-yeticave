@@ -47,8 +47,7 @@ GROUP BY `lot`.`id`
 ORDER BY `lot`.`date_expire` DESC;
 
 -- Найти лот по его названию или описанию
-SELECT * FROM `yeticave`.`lot` WHERE `name` like '%pro%';
-SELECT * FROM `yeticave`.`lot` WHERE `description` like '%Кливера%';
+SELECT * FROM `yeticave`.`lot` WHERE `name` like '%pro%' OR `description` like '%pro%';
 
 -- Обновить название лота по его идентификатору;
 UPDATE `yeticave`.`lot` SET `name` = '2014 Rossignol District Snowboard (sale)' WHERE `id` = 1;
