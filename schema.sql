@@ -32,7 +32,7 @@ CREATE TABLE `lot` (
 	`date_expire` DATETIME NOT NULL,
 	`bet_step` INT(11) NOT NULL,
 	`user_id` INT(11) NOT NULL,
-	`winner_id` INT(11) NOT NULL,
+	`winner_id` INT(11) NULL DEFAULT NULL,
 	`category_id` INT(11) NOT NULL,
 	PRIMARY KEY (`id`),
   INDEX `FK_lot_user_id` (`user_id`),
