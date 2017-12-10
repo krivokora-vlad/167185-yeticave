@@ -10,4 +10,5 @@
 
     <section class="lot-item container">
       <h1><?=$data['title'];?></h1>
+      <?=(isset($data['content'])) ? '<p>'.$data['content'].'</p>' : '';?>
     </section>

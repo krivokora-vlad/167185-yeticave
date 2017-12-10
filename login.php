@@ -6,6 +6,9 @@ require_once('userdata.php');
 require_once('functions.php');
 require_once('data.php');
 
+require_once('mysql_helper.php');
+require_once('init.php');
+
 $errors = [];
 
 if ($user) {
