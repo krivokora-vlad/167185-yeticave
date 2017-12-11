@@ -58,19 +58,15 @@ if ($user) {
       }
     
       $image = '';
-      if ($_FILES['photo2']['error'] == 0) {
-        $tmp_name = $_FILES['photo2']['tmp_name'];
-        $path = $_FILES['photo2']['name'];
-    
-        $finfo = finfo_open(FILEINFO_MIME_TYPE);
-        $file_type = finfo_file($finfo, $tmp_name);
-        
-        if ($file_type !== "image/png" && $file_type !== "image/jpeg") {
-          $errors['Файл'] = 'Загрузите картинку в формате PNG или JPG';
-        } else {
+      $file = $_FILES['photo2'];
+      if (file_is_uploaded($file)) {
+        $tmp_name = $file['tmp_name'];
+        $path = $file['name'];
+        if (file_is_image($file)) {
           move_uploaded_file($tmp_name, 'img/' . $path);
-          $lot['path'] = $path;
           $image = 'img/' . $path;
+        } else {
+          $errors['Файл'] = 'Загрузите картинку в формате PNG или JPG';
         }
       } else {
         $errors['Файл'] = 'Вы не загрузили файл';
