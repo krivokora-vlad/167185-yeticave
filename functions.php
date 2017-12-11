@@ -23,16 +23,36 @@ function include_template($template_name, $data) {
     }
 }
 
-function searchUserByEmail($email, $users) {
-	$result = null;
-	foreach ($users as $user) {
-		if ($user['email'] == $email) {
-			$result = $user;
-			break;
-		}
-	}
+function query($db_connect, $sql) {
+    $result = mysqli_query($db_connect, $sql);
 
-	return $result;
+    if (!$result) {
+        $error = mysqli_error($db_connect);
+        $page_title = 'Ошибка в запросе в базу даных';
+        $page_content = include_template('error', [
+          'categories' => [],
+          'title' => $page_title,
+          'content' => $error.'<br>'.$sql,
+        ]);
+        $layout_content = include_template('layout', [
+          'content'     => $page_content,
+          'title'       => $page_title,
+          'categories'  => [],
+          'user'        => []
+        ]);
+        print($layout_content);
+        exit();
+    } else {
+        if ($result === true) {
+        } else {
+            return mysqli_fetch_all($result, MYSQLI_ASSOC);
+        }
+    }
+}
+
+function lot_expire_timer ($exp_ts) {
+    $diff = $exp_ts - strtotime('now');
+    return gmdate('H:i:s',$diff);
 }
 
 ?>

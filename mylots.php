@@ -2,23 +2,19 @@
 
 require_once('init.php');
 
+$user_id = (isset($user['id'])) ? $user['id'] : -1;
 
 if ($user) {
   $my_lots = [];
-  
-  $cookie_value = [];
-  
-  if (isset($_COOKIE['bets'])) {
-    $cookie_value = json_decode($_COOKIE['bets'], true);
-  }
-  
-  foreach($cookie_value as $key => $value) {
-    $lot = $announcements[$key];
-    $lot['cost'] = $value['cost'];
-    $lot['time'] = $value['time'];
-    $lot['lot_id'] = $key;
-    $my_lots[] = $lot;
-  }
+
+  $my_lots = query(
+    $db_connect,
+    'SELECT `bet`.`lot_id`, `lot`.`name`, `lot`.`image`, `category`.`name` as `category`, `bet`.`cost`, `bet`.`id` as `bet_id`, `bet`.`date`, `lot`.`date_expire`
+    FROM bet
+    LEFT JOIN lot ON `bet`.`lot_id` = `lot`.`id`
+    LEFT JOIN category ON `lot`.`category_id` = `category`.`id`
+    WHERE `bet`.`user_id`='.$user_id
+  );
   
   $page_title = 'Мои ставки';
   $page_content = include_template('mylots', [
@@ -38,8 +34,8 @@ if ($user) {
 $layout_content = include_template('layout', [
     'content' => $page_content,
     'title' => $page_title,
-    'user' => $user,
-    'user_avatar' => $user_avatar
+    'categories'  => $categories,
+    'user' => $user
 ]);
 
 print($layout_content);

@@ -57,6 +57,7 @@ if ($user) {
         }
       }
     
+      $image = '';
       if ($_FILES['photo2']['error'] == 0) {
         $tmp_name = $_FILES['photo2']['tmp_name'];
         $path = $_FILES['photo2']['name'];
@@ -69,6 +70,7 @@ if ($user) {
         } else {
           move_uploaded_file($tmp_name, 'img/' . $path);
           $lot['path'] = $path;
+          $image = 'img/' . $path;
         }
       } else {
         $errors['Файл'] = 'Вы не загрузили файл';
@@ -80,21 +82,27 @@ if ($user) {
           'errors'  => $errors
         ]);
       } else {
-    
-        $new_lot = [
-          'name' => $lot['lot-name'],
-          'category' => $lot['category'],
-          'price' => $lot['lot-rate'],
-          'url_img' => 'img/'.$lot['path']
-        ];
-    
-        $page_content = include_template('lot', [
-          'categories' => $categories,
-          'lot'   => $new_lot,
-          'bets'  => $bets,
-          'user'  => $user,
-        ]);
+        query(
+          $db_connect,
+          sprintf(
+            "INSERT INTO `yeticave`.`lot`
+            (`date_publish`, `name`, `description`, `image`, `price_start`, `date_expire`, `bet_step`, `user_id`, `category_id`)
+            VALUES (NOW(), '%s', '%s', '%s', '%d', '%s', '%d', '%d', '2');",
+            mysqli_real_escape_string($db_connect, $lot['lot-name']),
+            mysqli_real_escape_string($db_connect, $lot['message']),
+            $image,
+            intval($lot['lot-rate']),
+            date("Y-m-d H:i:s",strtotime($lot['lot-date'])),
+            intval($lot['lot-step']),
+            $user['id'],
+            intval($lot['category'])
+          )
+        );
+
+        header("Location: /lot.php?id=".mysqli_insert_id($db_connect));
+        exit();
       } 
+      
     
     } else {
       $page_content = include_template('add', [
@@ -115,8 +123,8 @@ if ($user) {
 $layout_content = include_template('layout', [
 	'content'     => $page_content,
   'title'       => 'Добавление лота',
-  'user'        => $user,
-  'user_avatar' => $user_avatar,
+  'categories'  => $categories,
+  'user'        => $user
 ]);
 
 print($layout_content);

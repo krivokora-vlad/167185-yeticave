@@ -1,26 +1,25 @@
 <?
   $lot_name   = $_POST['lot-name'] ?? '';
-  $category   = $_POST['category'] ?? '';
+  $post_category   = $_POST['category'] ?? '';
   $message    = $_POST['message'] ?? '';
   $lot_rate   = $_POST['lot-rate'] ?? '';
   $lot_step   = $_POST['lot-step'] ?? '';
   $lot_date   = $_POST['lot-date'] ?? '';
-
 ?>
 
   <nav class="nav">
     <ul class="nav__list container">
-      <? foreach ($data['categories'] as $key => $value): ?>
+      <? foreach ($data['categories'] as $category): ?>
         <li class="nav__item">
-          <a href="#"><?=$value;?></a>
+          <a href="#"><?=$category['name'];?></a>
         </li>
-      <? endforeach; ?> 
+      <? endforeach; ?>
     </ul>
   </nav>
-  <form class="form form--add-lot container <?=(count($data['errors']) ? 'form--invalid' : '');?> " action="add.php" enctype="multipart/form-data" method="post"> <!-- form--invalid -->
+  <form class="form form--add-lot container <?=(count($data['errors']) ? 'form--invalid' : '');?> " action="add.php" enctype="multipart/form-data" method="post">
     <h2>Добавление лота</h2>
     <div class="form__container-two">
-      <div class="form__item <?=isset($data['errors']['Наименование']) ? 'form__item--invalid' : '';?>"> <!-- form__item--invalid -->
+      <div class="form__item <?=isset($data['errors']['Наименование']) ? 'form__item--invalid' : '';?>">
         <label for="lot-name">Наименование</label>
         <input id="lot-name" type="text" name="lot-name" placeholder="Введите наименование лота" value="<?=$lot_name;?>" required>
         <?=isset($data['errors']['Наименование']) ? '<span class="form__error">'.$data['errors']['Наименование'].'</span>' : ''; ?>
@@ -29,8 +28,8 @@
         <label for="category">Категория</label>
         <select id="category" name="category" required>
           <option value="">Выберите категорию</option>
-          <? foreach ($data['categories'] as $key => $value): ?>
-            <option <?= ($category == $value) ? 'selected' : ''; ?> value="<?=$value;?>"><?=$value;?></option>
+          <? foreach ($data['categories'] as $cat): ?>
+            <option <?=(strval($post_category) == strval($cat['id'])) ? 'selected' : ''; ?> value="<?=$cat['id'];?>"><?=$cat['name'];?></option>
           <? endforeach; ?> 
         </select>
         <?=isset($data['errors']['Категория']) ? '<span class="form__error">'.$data['errors']['Категория'].'</span>' : ''; ?>

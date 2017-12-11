@@ -18,22 +18,22 @@
             <input type="search" name="search" placeholder="Поиск лота">
             <input class="main-header__search-btn" type="submit" name="find" value="Найти">
         </form>
-        <a class="main-header__add-lot button" href="add-lot.html">Добавить лот</a>
+        <a class="main-header__add-lot button" href="add.php">Добавить лот</a>
 
         <nav class="user-menu">
 
             <? if ($data['user']): ?>
             <div class="user-menu__image">
-                <img src="<?=$data['user_avatar']; ?>" width="40" height="40" alt="Пользователь">
+                <img src="<?=$data['user']['avatar']; ?>" width="40" height="40" alt="Пользователь">
             </div>
             <div class="user-menu__logged">
-                <p><?=$data['user']['name']; ?></p>
+                <p><?=strip_tags($data['user']['name']); ?></p>
                 <a href="/logout.php">Выйти</a>
             </div>
             <? else: ?>
             <ul class="user-menu__list">
                 <li class="user-menu__item">
-                    <a href="#">Регистрация</a>
+                    <a href="/sign-up.php">Регистрация</a>
                 </li>
                 <li class="user-menu__item">
                     <a href="/login.php">Вход</a>
@@ -51,24 +51,11 @@
 <footer class="main-footer">
     <nav class="nav">
         <ul class="nav__list container">
-            <li class="nav__item">
-                <a href="all-lots.html">Доски и лыжи</a>
-            </li>
-            <li class="nav__item">
-                <a href="all-lots.html">Крепления</a>
-            </li>
-            <li class="nav__item">
-                <a href="all-lots.html">Ботинки</a>
-            </li>
-            <li class="nav__item">
-                <a href="all-lots.html">Одежда</a>
-            </li>
-            <li class="nav__item">
-                <a href="all-lots.html">Инструменты</a>
-            </li>
-            <li class="nav__item">
-                <a href="all-lots.html">Разное</a>
-            </li>
+            <? foreach ($data['categories'] as $key => $value): ?>
+                <li class="nav__item">
+                    <a href="all-lots.html"><?=$value['name'];?></a>
+                </li>
+            <? endforeach; ?> 
         </ul>
     </nav>
     <div class="main-footer__bottom container">
