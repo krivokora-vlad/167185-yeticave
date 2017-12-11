@@ -1,17 +1,34 @@
 <?php
 
+/**
+ * Возвращает относительное время от указанного времени до текущего
+ *
+ * @param $ts timestamp Прошедшая дата
+ *
+ * @return string gmdate Прошедшее время в относительном формате
+ */
 function time_of_betting($ts) {
     $now = strtotime('now');
     $diff = $now - $ts;
+    $result = '';
     if ($diff > 86400) {
-        return gmdate("d.m.y в H:i", $ts);
+        $result = gmdate("d.m.y в H:i", $ts);
     } else if ($diff > 3600){
-        return gmdate("H часов назад", $diff);
+        $result = gmdate("H часов назад", $diff);
     } else {
-        return gmdate("i минут назад", $diff);
+        $result = gmdate("i минут назад", $diff);
     }
+    return $result;
 }
 
+/**
+ * Функция подключения php шаблона
+ *
+ * @param string $template_name Название файла шаблона, без расширения
+ * @param array $data Массив данных для шаблона
+ *
+ * @return string Возвращает подключенный файл шаблона
+ */
 function include_template($template_name, $data) {
     $template = 'templates/' . $template_name . '.php';
     if (is_file($template)) {
@@ -23,6 +40,15 @@ function include_template($template_name, $data) {
     }
 }
 
+/**
+ * Функция выполнения запроса в базу данных
+ * В случае ошибочного запроса - выдаёт страницу ошибки с отладочной информацией
+ *
+ * @param mysqli_connect $db_connect Подключение к базе
+ * @param string $sql Строка запроса
+ *
+ * @return array Возвращает массив ответа от базы
+ */
 function query($db_connect, $sql) {
     $result = mysqli_query($db_connect, $sql);
 
@@ -50,6 +76,13 @@ function query($db_connect, $sql) {
     }
 }
 
+/**
+ * Возвращает время до истечения лота
+ *
+ * @param $exp_ts timestamp Дата истечения лота
+ *
+ * @return string gmdate Количество часов, минут и секунд до закрытия лота
+ */
 function lot_expire_timer ($exp_ts) {
     $diff = $exp_ts - strtotime('now');
     return gmdate('H:i:s',$diff);
