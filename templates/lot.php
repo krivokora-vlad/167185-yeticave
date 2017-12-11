@@ -13,7 +13,7 @@
 </nav>
 <section class="lot-item container">
 <?php if (isset($data['lot'])): ?>
-    <h2><?=$data['lot']['name']; ?></h2>
+    <h2><?=strip_tags($data['lot']['name']); ?></h2>
     <div class="lot-item__content">
         <div class="lot-item__left">
             <div class="lot-item__image">
@@ -23,11 +23,13 @@
             <p class="lot-item__description"><?=$data['lot']['description']; ?></p>
         </div>
         <div class="lot-item__right">
-            <? if($data['user'] && !$data['is_my_lot'] && !$data['lot_expired']): ;?>
+            
             <div class="lot-item__state">
-                <div class="lot-item__timer timer">
-                    <?=lot_expire_timer(strtotime($data['lot']['date_expire']));?>
-                </div>
+                <? if (!$data['lot_expired']): ?>
+                    <div class="lot-item__timer timer">
+                        <?=lot_expire_timer(strtotime($data['lot']['date_expire']));?>
+                    </div>
+                <? endif; ?>
                 <div class="lot-item__cost-state">
                     <div class="lot-item__rate">
                         <span class="lot-item__amount">Текущая цена</span>
@@ -35,12 +37,13 @@
                             <?=$data['lot']['current_price']; ?>
                         </span>
                     </div>
-                    
-                    <div class="lot-item__min-cost">
-                        Мин. ставка <span><?=$data['lot']['min_bet']; ?> р</span>
-                    </div>
+                    <? if (!$data['lot_expired']): ?>
+                        <div class="lot-item__min-cost">
+                            Мин. ставка <span><?=$data['lot']['min_bet']; ?> р</span>
+                        </div>
+                    <? endif; ?>
                 </div>
-                <? if(!$data['is_bet']): ;?>
+                <? if($data['user'] && !$data['is_my_lot'] && !$data['lot_expired'] && !$data['is_bet']): ;?>
                 <form class="lot-item__form" action="lot.php?id=<?=$data['lot_id'];?>" method="post">
                     <p class="lot-item__form-item">
                         <label for="cost">Ваша ставка</label>
@@ -51,18 +54,16 @@
                 <?=(isset($data['errors']['cost'])) ? '<p class="form__error" style="display: block;">'.$data['errors']['cost'].'</p>' : ''; ?>
                 <? endif; ?>
             </div>
-            <? endif; ?>
             <div class="history">
                 <h3>История ставок (<span><?=$data['bets_count'];?></span>)</h3>
-                <!-- заполните эту таблицу данными из массива $bets-->
                 <table class="history__list">
-                <? foreach ($data['bets'] as $key => $value): ?>
-                    <tr class="history__item">
-                        <td class="history__name"><?=$value['name']; ?></td>
-                        <td class="history__price"><?=$value['cost']; ?> р</td>
-                        <td class="history__time"><?=time_of_betting(strtotime($value['date'])); ?></td>
-                    </tr>
-                <? endforeach; ?>
+                    <? foreach ($data['bets'] as $key => $value): ?>
+                        <tr class="history__item">
+                            <td class="history__name"><?=$value['name']; ?></td>
+                            <td class="history__price"><?=$value['cost']; ?> р</td>
+                            <td class="history__time"><?=time_of_betting(strtotime($value['date'])); ?></td>
+                        </tr>
+                    <? endforeach; ?>
                 </table>
             </div>
         </div>

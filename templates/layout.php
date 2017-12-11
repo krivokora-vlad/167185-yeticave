@@ -27,7 +27,7 @@
                 <img src="<?=$data['user']['avatar']; ?>" width="40" height="40" alt="Пользователь">
             </div>
             <div class="user-menu__logged">
-                <p><?=$data['user']['name']; ?></p>
+                <p><?=strip_tags($data['user']['name']); ?></p>
                 <a href="/logout.php">Выйти</a>
             </div>
             <? else: ?>

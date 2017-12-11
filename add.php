@@ -82,32 +82,24 @@ if ($user) {
           'errors'  => $errors
         ]);
       } else {
-
-
         query(
           $db_connect,
           sprintf(
             "INSERT INTO `yeticave`.`lot`
             (`date_publish`, `name`, `description`, `image`, `price_start`, `date_expire`, `bet_step`, `user_id`, `category_id`)
             VALUES (NOW(), '%s', '%s', '%s', '%d', '%s', '%d', '%d', '2');",
-            $lot['lot-name'],
-            $lot['message'],
+            mysqli_real_escape_string($db_connect, $lot['lot-name']),
+            mysqli_real_escape_string($db_connect, $lot['message']),
             $image,
-            $lot['lot-rate'],
+            intval($lot['lot-rate']),
             date("Y-m-d H:i:s",strtotime($lot['lot-date'])),
-            $lot['lot-step'],
+            intval($lot['lot-step']),
             $user['id'],
             intval($lot['category'])
           )
         );
 
-        $new_lot = query(
-          $db_connect,
-          sprintf("SELECT `id` FROM `lot` WHERE `user_id` = %d ORDER BY `id` DESC LIMIT 1", $user['id'])
-        );
-        $new_lot = $new_lot[0];
-
-        header("Location: /lot.php?id=".$new_lot['id']);
+        header("Location: /lot.php?id=".mysqli_insert_id($db_connect));
         exit();
       } 
       
@@ -132,8 +124,7 @@ $layout_content = include_template('layout', [
 	'content'     => $page_content,
   'title'       => 'Добавление лота',
   'categories'  => $categories,
-  'user'        => $user,
-  'user_avatar' => $user_avatar,
+  'user'        => $user
 ]);
 
 print($layout_content);

@@ -17,8 +17,7 @@ $layout_content = include_template('layout', [
   'content'     => $page_content,
   'title'       => $title,
   'categories'  => $categories,
-  'user'        => $user,
-  'user_avatar' => $user_avatar
+  'user'        => $user
 ]);
 print($layout_content);
 

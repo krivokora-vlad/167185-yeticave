@@ -28,19 +28,17 @@ if ($user) {
       }
     }
 
-    if ($form['email'] != '') {
-      $email = $form['email'];
-      if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $errors['email'] = 'Пожалуйста, укажите корректный';
-      } else {
-        $exist_account = query(
-          $db_connect,
-          (sprintf("SELECT `id` FROM user WHERE email='%s'", $email))
-        );
-        if(count($exist_account)) {
-          $errors['email'] = 'Данный E-mail адрес уже используется.';
-        };
-      }
+    $email = $form['email'];
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+      $errors['email'] = 'Пожалуйста, укажите корректный';
+    } else {
+      $exist_account = query(
+        $db_connect,
+        (sprintf("SELECT `id` FROM user WHERE email='%s'", $email))
+      );
+      if(count($exist_account)) {
+        $errors['email'] = 'Данный E-mail адрес уже используется.';
+      };
     }
 
     $avatar = '';
@@ -68,18 +66,18 @@ if ($user) {
       $query = sprintf(
         "INSERT INTO `yeticave`.`user` (`name`,`email`,`password`,`avatar`,`contacts`,`reg_date`)
         VALUES ('%s','%s','%s','%s','%s', CURTIME());",
-        $form['name'],
+        mysqli_real_escape_string($db_connect, $form['name']),
         $form['email'],
         $password,
         $avatar,
-        $form['message']
+        mysqli_real_escape_string($db_connect, $form['message'])
       );
 
       $add_user = query($db_connect, $query);
+      header("Location: /login.php");
+      exit();
     }
-
-    header("Location: /login.php");
-    exit();
+   
   }
 
   $page_content = include_template('sign-up', [
@@ -92,8 +90,7 @@ if ($user) {
       'content'     => $page_content,
       'categories'  => $categories,
       'title'       => 'Регистрация',
-      'user'        => $user,
-      'user_avatar' => $user_avatar
+      'user'        => $user
   ]);
   
   print($layout_content);

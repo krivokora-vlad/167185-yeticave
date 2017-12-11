@@ -25,7 +25,7 @@ $announcement = query(
     ORDER BY `price` DESC
     LIMIT 1'
 );
-$lot = $announcement[0];
+
 
 $page_found = COUNT($announcement);
 
@@ -38,6 +38,7 @@ if (!$page_found) {
     ];
     $page_content = include_template('error', $page_data);
 } else {
+    $lot = $announcement[0];
     $id = $lot['id'];
     $bets = query(
         $db_connect,
@@ -65,7 +66,7 @@ if (!$page_found) {
             $cost = intval((isset($_POST['cost'])) ? $_POST['cost'] : 0);
             $price = $lot['min_bet'];
 
-            if ( $price >= $cost ) {
+            if ( $price > $cost ) {
                 $errors['cost'] = 'Ставка должна быть больше стоимости товара.';
             } else {
                 query($db_connect, sprintf("INSERT INTO bet (`date`, `cost`, `user_id`, `lot_id`) VALUES (NOW(), %d, %d, %d)", $cost, $user['id'], $lot['id']));
@@ -83,11 +84,11 @@ if (!$page_found) {
         'is_bet' => $is_bet,
         'errors' => $errors,
         'user' => $user,
-        'lot_expired' => (strtotime($lot['date_expire']) <= time()) ? true : false,
-        'is_my_lot' => ($user['id'] == $lot['user_id']) ? true : false,
+        'lot_expired' => strtotime($lot['date_expire']) <= time(),
+        'is_my_lot' => $user['id'] == $lot['user_id'],
     ];
 
-    $page_title = $lot['name'];
+    $page_title = strip_tags($lot['name']);
     $page_content = include_template('lot', $page_data);
 }
 
@@ -95,8 +96,7 @@ $layout_content = include_template('layout', [
     'content' => $page_content,
     'title' => $page_title,
     'categories'  => $categories,
-    'user' => $user,
-    'user_avatar' => $user_avatar
+    'user' => $user
 ]);
 
 print($layout_content);

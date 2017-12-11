@@ -4,6 +4,9 @@ error_reporting(E_ALL);
 
 session_start();
 
+// устанавливаем часовой пояс в Московское время
+date_default_timezone_set('Europe/Moscow');
+
 require_once('mysql_helper.php');
 require_once('functions.php');
 
@@ -21,8 +24,7 @@ if (!$db_connect) {
       'content'     => $page_content,
       'title'       => $page_title,
       'categories'  => [],
-      'user'        => [],
-      'user_avatar' => ''
+      'user'        => []
     ]);
     print($layout_content);
     exit();
@@ -31,6 +33,8 @@ if (!$db_connect) {
 mysqli_set_charset($db_connect, "utf8");
 
 
+$user = (isset($_SESSION['user'])) ? $_SESSION['user'] : false;
 
-require_once('userdata.php');
-require_once('data.php');
+$categories = query($db_connect,'SELECT `id`, `name` FROM category');
+
+

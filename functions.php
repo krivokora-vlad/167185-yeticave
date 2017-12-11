@@ -23,24 +23,8 @@ function include_template($template_name, $data) {
     }
 }
 
-function searchUserByEmail($email, $users) {
-	$result = null;
-	foreach ($users as $user) {
-		if ($user['email'] == $email) {
-			$result = $user;
-			break;
-		}
-	}
-
-	return $result;
-}
-
 function query($db_connect, $sql) {
     $result = mysqli_query($db_connect, $sql);
-
-    //echo '<pre>';
-    //var_dump($result);
-    //echo '</pre>';
 
     if (!$result) {
         $error = mysqli_error($db_connect);
@@ -54,14 +38,12 @@ function query($db_connect, $sql) {
           'content'     => $page_content,
           'title'       => $page_title,
           'categories'  => [],
-          'user'        => [],
-          'user_avatar' => ''
+          'user'        => []
         ]);
         print($layout_content);
         exit();
     } else {
         if ($result === true) {
-            // its insert or update query mabe
         } else {
             return mysqli_fetch_all($result, MYSQLI_ASSOC);
         }
@@ -70,7 +52,7 @@ function query($db_connect, $sql) {
 
 function lot_expire_timer ($exp_ts) {
     $diff = $exp_ts - strtotime('now');
-    return round($diff/3600).':'.date('i:s',$diff);
+    return gmdate('H:i:s',$diff);
 }
 
 ?>

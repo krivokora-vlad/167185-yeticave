@@ -2,37 +2,29 @@
 
 require_once('init.php');
 
-// устанавливаем часовой пояс в Московское время
-date_default_timezone_set('Europe/Moscow');
 
-// записать в эту переменную оставшееся время в этом формате (ЧЧ:ММ)
-$lot_time_remaining = "00:00";
-
-// временная метка для полночи следующего дня
-$tomorrow = strtotime('tomorrow midnight');
-
-// временная метка для настоящего времени
-$now = strtotime('now');
-
-$diff = $tomorrow - $now;
-$hours = str_pad(strval(floor($diff / 3600)), 2, "0", STR_PAD_LEFT);
-$minutes = str_pad(strval(floor($diff / 60) - ($hours * 60)), 2, "0", STR_PAD_LEFT);
-
-// далее нужно вычислить оставшееся время до начала следующих суток и записать его в переменную $lot_time_remaining
-$lot_time_remaining = $hours.':'.$minutes;
+$announcements = query(
+    $db_connect,
+    'SELECT `lot`.`id`, `lot`.`name`, `lot`.`price_start`, `lot`.`date_expire`, `lot`.`image`, COUNT(DISTINCT `bet`.`id`) as `bets`, MAX(`bet`.`cost`) as `price`, `category`.`name` as `category`
+    FROM `lot`
+    LEFT JOIN `bet` ON `lot`.`id` = `bet`.`lot_id`
+    LEFT JOIN `category` ON `lot`.`category_id` = `category`.`id`
+    WHERE `lot`.`date_expire` >= CURDATE()
+    GROUP BY `lot`.`id`
+    ORDER BY `lot`.`date_expire` DESC;');
 
 $page_data = [
     'categories' => $categories,
-    'announcements' => $announcements,
-    'lot_time_remaining' => $lot_time_remaining
+    'announcements' => $announcements
 ];
+
+
 $page_content = include_template('index', $page_data);
 $layout_content = include_template('layout', [
     'content'       => $page_content,
     'title'         => 'Главная',
     'categories'    => $categories,
-    'user'          => $user,
-    'user_avatar'   => $user_avatar
+    'user'          => $user
 ]);
 
 print($layout_content);

@@ -29,10 +29,14 @@ if ($user) {
           }
         }
       }
-      
-      if ($user = searchUserByEmail($form['email'], $users)) {
-        if (password_verify($form['password'], $user['password'])) {
-          $_SESSION['user'] = $user;
+
+      $email = mysqli_real_escape_string($db_connect, $form['email']);
+
+      $user = query($db_connect, sprintf("SELECT * FROM user WHERE `email`='%s'", $email));
+
+      if (count($user)) {
+        if (password_verify($form['password'], $user[0]['password'])) {
+          $_SESSION['user'] = $user[0];
         } else {
           $errors[$dict['password']] = 'Вы ввели неверный пароль';
         }
@@ -55,8 +59,7 @@ if ($user) {
         'content'     => $page_content,
         'categories'  => $categories,
         'title'       => 'Страница входа',
-        'user'        => $user,
-        'user_avatar' => $user_avatar
+        'user'        => $user
     ]);
     
     print($layout_content);

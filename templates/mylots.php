@@ -17,7 +17,8 @@
               <img src="<?=$value['image'];?>" width="54" height="40" alt="Сноуборд">
             </div>
             <h3 class="rates__title">
-            <a href="lot.php?id=<?=$value['lot_id'];?>"><?=$value['name'];?>
+              <a href="lot.php?id=<?=$value['lot_id'];?>">
+                <?=strip_tags($value['name']);?>
               </a>
             </h3>
           </td>
@@ -26,7 +27,7 @@
           </td>
           <td class="rates__timer">
             <div class="timer timer--finishing">
-              <?=date('H:i:s', strtotime($value['date_expire']));?>
+              <?=lot_expire_timer(strtotime($value['date_expire']));?>
             </div>
           </td>
           <td class="rates__price">
