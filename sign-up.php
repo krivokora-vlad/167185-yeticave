@@ -52,8 +52,6 @@ if ($user) {
       } else {
         $errors['photo2'] = 'Загрузите картинку в формате PNG или JPG';
       }
-    } else {
-      $errors['photo2'] = 'Вы не загрузили файл';
     }
 
     $password = password_hash($form['password'], PASSWORD_BCRYPT);
