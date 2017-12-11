@@ -1,8 +1,6 @@
 <?php
 
 $user = (isset($_SESSION['user'])) ? $_SESSION['user'] : false;
-$user_avatar = 'img/user.jpg';
-
 
 $categories = query($db_connect,'SELECT `id`, `name` FROM category');
 
