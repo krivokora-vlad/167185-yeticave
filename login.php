@@ -28,17 +28,16 @@ if ($user) {
             $errors[$dict[$key]] = 'Это поле надо заполнить';
           }
         }
-    
-        if ($user = searchUserByEmail($form['email'], $users)) {
-          if (password_verify($form['password'], $user['password'])) {
-            $_SESSION['user'] = $user;
-          } else {
-            $errors[$dict['password']] = 'Вы ввели неверный пароль';
-          }
-        } else {
-          $errors[$dict['email']] = 'Вы ввели неверный email';
-        }
+      }
       
+      if ($user = searchUserByEmail($form['email'], $users)) {
+        if (password_verify($form['password'], $user['password'])) {
+          $_SESSION['user'] = $user;
+        } else {
+          $errors[$dict['password']] = 'Вы ввели неверный пароль';
+        }
+      } else {
+        $errors[$dict['email']] = 'Вы ввели неверный email';
       }
     
       if (!count($errors)) {
@@ -54,6 +53,7 @@ if ($user) {
     
     $layout_content = include_template('layout', [
         'content'     => $page_content,
+        'categories'  => $categories,
         'title'       => 'Страница входа',
         'user'        => $user,
         'user_avatar' => $user_avatar

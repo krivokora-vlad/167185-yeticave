@@ -20,7 +20,6 @@ $minutes = str_pad(strval(floor($diff / 60) - ($hours * 60)), 2, "0", STR_PAD_LE
 
 // далее нужно вычислить оставшееся время до начала следующих суток и записать его в переменную $lot_time_remaining
 $lot_time_remaining = $hours.':'.$minutes;
-// $lot_time_remaining = gmdate("H:i:s", $tomorrow - $now);
 
 $page_data = [
     'categories' => $categories,
@@ -29,10 +28,11 @@ $page_data = [
 ];
 $page_content = include_template('index', $page_data);
 $layout_content = include_template('layout', [
-    'content' => $page_content,
-    'title' => 'Главная',
-    'user' => $user,
-    'user_avatar' => $user_avatar
+    'content'       => $page_content,
+    'title'         => 'Главная',
+    'categories'    => $categories,
+    'user'          => $user,
+    'user_avatar'   => $user_avatar
 ]);
 
 print($layout_content);

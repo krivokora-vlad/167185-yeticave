@@ -1,8 +1,8 @@
       <nav class="nav">
         <ul class="nav__list container">
-            <? foreach ($data['categories'] as $key => $value): ?>
+            <? foreach ($data['categories'] as $category): ?>
                 <li class="nav__item">
-                    <a href="#"><?=$value;?></a>
+                    <a href="#"><?=$category['name'];?></a>
                 </li>
             <? endforeach; ?> 
         </ul>
