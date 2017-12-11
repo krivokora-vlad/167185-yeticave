@@ -88,4 +88,39 @@ function lot_expire_timer ($exp_ts) {
     return gmdate('H:i:s',$diff);
 }
 
+/**
+ * Проверка, был ли загружен файл в определённое поле
+ *
+ * @param $file Поле загружаемого файла
+ *
+ * @return bool Результат проверки
+ */
+function file_is_uploaded ($file) {
+    return ($file['error'] == 0) ? true : false;
+}
+
+/**
+ * Получение типа файла
+ *
+ * @param $file Проверяемый файл
+ *
+ * @return bool Результат проверки
+ */
+function get_file_type ($file) {
+    return finfo_file(finfo_open(FILEINFO_MIME_TYPE), $file['tmp_name']);
+}
+
+/**
+ * Проверка на базовые типы изображений, допустимых для загрузки
+ * 
+ * @param $file Проверяемый файл
+ *
+ * @return bool Результат проверки
+ */
+function file_is_image ($file) {
+    $file_type = get_file_type($file);
+    return ($file_type !== "image/png" && $file_type !== "image/jpeg") ? false : true;
+}
+
+
 ?>
