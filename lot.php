@@ -88,7 +88,7 @@ if (!$page_found) {
         'is_my_lot' => $user['id'] == $lot['user_id'],
     ];
 
-    $page_title = strip_tags($lot['name']);
+    $page_title = htmlspecialchars($lot['name']);
     $page_content = include_template('lot', $page_data);
 }
 
