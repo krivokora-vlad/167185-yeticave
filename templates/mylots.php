@@ -18,7 +18,7 @@
             </div>
             <h3 class="rates__title">
               <a href="lot.php?id=<?=$value['lot_id'];?>">
-                <?=strip_tags($value['name']);?>
+                <?=htmlspecialchars($value['name']);?>
               </a>
             </h3>
           </td>

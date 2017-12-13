@@ -32,11 +32,11 @@ if ($user) {
 
       $email = mysqli_real_escape_string($db_connect, $form['email']);
 
-      $user = query($db_connect, sprintf("SELECT * FROM user WHERE `email`='%s'", $email));
+      $account = query($db_connect, sprintf("SELECT * FROM user WHERE `email`='%s'", $email));
 
-      if (count($user)) {
-        if (password_verify($form['password'], $user[0]['password'])) {
-          $_SESSION['user'] = $user[0];
+      if (count($account)) {
+        if (password_verify($form['password'], $account[0]['password'])) {
+          $_SESSION['user'] = $account[0];
         } else {
           $errors[$dict['password']] = 'Вы ввели неверный пароль';
         }

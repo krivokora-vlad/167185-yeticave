@@ -13,14 +13,14 @@
 </nav>
 <section class="lot-item container">
 <?php if (isset($data['lot'])): ?>
-    <h2><?=strip_tags($data['lot']['name']); ?></h2>
+    <h2><?=htmlspecialchars($data['lot']['name']); ?></h2>
     <div class="lot-item__content">
         <div class="lot-item__left">
             <div class="lot-item__image">
                 <img src="<?=$data['lot']['image']; ?>" width="730" height="548" alt="Сноуборд">
             </div>
             <p class="lot-item__category">Категория: <span><?=$data['lot']['category']; ?></span></p>
-            <p class="lot-item__description"><?=$data['lot']['description']; ?></p>
+            <p class="lot-item__description"><?=htmlspecialchars($data['lot']['description']); ?></p>
         </div>
         <div class="lot-item__right">
             
